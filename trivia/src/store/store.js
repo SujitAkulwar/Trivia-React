@@ -25,11 +25,11 @@ const userslice = createSlice({
     },
     setsubject: (state, action) => {
       state.subject = action.payload
-    },
+    }
   },
 });
 
-export const useraction = userslice.reducer;
+export const useraction = userslice.actions;
 
 const store = configureStore({
   reducer: { user: userslice.reducer },
