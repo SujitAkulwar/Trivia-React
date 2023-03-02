@@ -1,146 +1,107 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import "./Trivia.css"
+import "./Trivia.css";
+import { useState, useEffect } from "react";
+import Nav from "../Nav/Nav";
 
 const Trivia = () => {
-    
-    const Catagory = useSelector((state)=>state.user.subject);
-    const Difficulty = useSelector((state)=>state.user.difficultylevel);
+  const Catagory = useSelector((state) => state.user.subject);
+  const Difficulty = useSelector((state) => state.user.difficultylevel);
 
-  var head = document.getElementById("head");
-  var options = document.getElementsByClassName("option");
-  var nextBtn = document.getElementById("next-btn");
-  var option1 = document.getElementById("A");
-  var option2 = document.getElementById("B");
-  var option3 = document.getElementById("C");
-  var option4 = document.getElementById("D");
-  var i = 0;
-  var counter = 0;
-  var score = 0;
-  var correct = 0;
+  const [option1, setoption1] = useState("null");
+  const [option2, setoption2] = useState("null");
+  const [option3, setoption3] = useState("null");
+  const [option4, setoption4] = useState("null");
+  const [question, setquestion] = useState("null");
+  const [i, seti] = useState(1);
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const [result, setresult] = useState([]);
 
-  var Quetions = localStorage.getItem("Quetions");
-  
+  // var xhr = new XMLHttpRequest();
+  // xhr.open(
+  //   "GET",
+  //   "https://opentdb.com/api.php?amount=10" +
+  //     "&category=" +
+  //     Catagory +
+  //     "&difficulty=" +
+  //     Difficulty +
+  //     "&type=multiple",
+  //   true
+  // );
+  // xhr.onload = function () {
+  //   if (this.status == 200) {
+  //     Response(JSON.parse(this.responseText));
+  //   }
+  // };
+  // xhr.send();
+  // function Response(result) {
+  //   setQuestion(result,i);
+  // }
 
-  var xhr = new XMLHttpRequest();
-  xhr.open(
-    "GET",
+  // Note: the empty deps array [] means
+  // this useEffect will run once
+  // similar to componentDidMount()
+
+  var reqstring =
     "https://opentdb.com/api.php?amount=10" +
-      "&category=" +
-      Catagory +
-      "&difficulty=" +
-      Difficulty +
-      "&type=multiple",
-    true
-  );
-  xhr.onload = function () {
-    if (this.status == 200) {
-      Response(JSON.parse(this.responseText));
-    }
-  };
-  xhr.send();
-  function Response(result) {
-    setQuetion(result, i);
-  }
+    "&category=" +
+    Catagory +
+    "&difficulty=" +
+    Difficulty +
+    "&type=multiple";
 
-  function setQuetion(result, i) {
-    if (i < Quetions) {
-      head.innerHTML = result.results[i].question;
-      correct = Math.floor(Math.random() * 4);
-      var k = 0;
-      for (var j = 0; j < 4; j++) {
-        if (j == correct) {
-          options[j].innerHTML = result.results[i].correct_answer;
-        } else {
-          options[j].innerHTML = result.results[i].incorrect_answers[k];
-          k++;
-        }
-      }
-      nextBtn.addEventListener("click", function () {
-        i++;
-        counter = 0;
-        check_opt();
-        setQuetion(result, i);
-      });
-    } else {
-      localStorage.setItem("score", score);
-    }
-  }
-  function opt1() {
-    if (correct == 0 && counter == 0) {
-      option1.style.backgroundColor = "green";
-      check_score();
-    } else if (counter == 0) {
-      option1.style.backgroundColor = "red";
-      setTimeout(function () {
-        options[correct].style.backgroundColor = "green";
-      }, 100);
-    }
-    counter = 1;
-  }
-  function opt2() {
-    if (correct == 1 && counter == 0) {
-      option2.style.backgroundColor = "green";
-      check_score();
-    } else if (counter == 0) {
-      option2.style.backgroundColor = "red";
-      setTimeout(function () {
-        options[correct].style.backgroundColor = "green";
-      }, 100);
-    }
-    counter = 1;
-  }
-  function opt3() {
-    if (correct == 2 && counter == 0) {
-      option3.style.backgroundColor = "green";
-      check_score();
-    } else if (counter == 0) {
-      option3.style.backgroundColor = "red";
-      setTimeout(function () {
-        options[correct].style.backgroundColor = "green";
-      }, 100);
-    }
-    counter = 1;
-  }
-  function opt4() {
-    if (correct == 3 && counter == 0) {
-      option4.style.backgroundColor = "green";
-      check_score();
-    } else if (counter == 0) {
-      option4.style.backgroundColor = "red";
-      setTimeout(function () {
-        options[correct].style.backgroundColor = "green";
-      }, 100);
-    }
-    counter = 1;
-  }
-  function check_opt() {
-    for (var p = 0; p < 4; p++) {
-      options[p].style.background = "orange";
-    }
-  }
+  // console.log(reqstring);
 
+  useEffect(() => {
+    getQuestions();
+    function getQuestions() {
+      fetch(reqstring)
+      
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setIsLoaded(true);
+            setItems(result);
+          },
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+          }
+        );
+      console.log(res);
+    }
+  }, [reqstring]);
+
+  //onClick={() => check(1)}
   return (
-    <main>
-      <h1 id="head"></h1>
-      <div className="options">
-        <div className="option" id="A" onClick={()=>opt1()}>
-          1 {option1}
+    <>
+      <Nav />
+      <main>
+        <h1 id="head">
+          {i}
+          {question}
+        </h1>
+        <div className="options">
+          <div className="option" id="A">
+            1 {option1}
+          </div>
+          <div className="option" id="B">
+            2 {option2}
+          </div>
+          <div className="option" id="C">
+            3 {option3}
+          </div>
+          <div className="option" id="D">
+            4 {option4}
+          </div>
         </div>
-        <div className="option" id="B" onClick={()=>opt2()}>
-          2 {option2}
+        <div className="next">
+          <button id="next-btn">Next</button>
         </div>
-        <div className="option" id="C" onClick={()=>opt3()}>
-          3 {option3}
-        </div>
-        <div className="option" id="D" onClick={()=>opt4()}>
-          4 {option4}
-        </div>
-      </div>
-      <div className="next">
-        <button id="next-btn">Next</button>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 

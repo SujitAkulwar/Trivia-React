@@ -20,7 +20,7 @@ const Form = () => {
     dispatch(useraction.setsubject(subject));
     dispatch(useraction.setdifficulty(difficult));
     let path = `./Trivia`; 
-    if(subject!="" && difficult!=""){navigate(path);}
+    if(subject!=="" && difficult!==""){navigate(path);}
 
   };
 
