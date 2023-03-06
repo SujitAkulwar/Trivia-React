@@ -1,106 +1,111 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./Trivia.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Nav from "../Nav/Nav";
 
 const Trivia = () => {
   const Catagory = useSelector((state) => state.user.subject);
   const Difficulty = useSelector((state) => state.user.difficultylevel);
 
-  const [option1, setoption1] = useState("null");
-  const [option2, setoption2] = useState("null");
-  const [option3, setoption3] = useState("null");
-  const [option4, setoption4] = useState("null");
-  const [question, setquestion] = useState("null");
-  const [i, seti] = useState(1);
-  const [error, setError] = useState(null);
+  const [load, setload] = useState(0);
+  const [option1, setoption1] = useState("");
+  const [option2, setoption2] = useState("");
+  const [option3, setoption3] = useState("");
+  const [option4, setoption4] = useState("");
+  const setoption = [setoption1, setoption2, setoption3, setoption4];
+  const option = [option1, option2, option3, option4];
+  const [question, setquestion] = useState("");
+  var [i, seti] = useState(0);
+  // const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-  const [result, setresult] = useState([]);
+  // const [items, setItems] = useState([]);
+  // const [result, setresult] = useState([]);
+  var [correct, setcorrect] = useState();
+  var [itr, setitr] = useState(0);
 
-  // var xhr = new XMLHttpRequest();
-  // xhr.open(
-  //   "GET",
-  //   "https://opentdb.com/api.php?amount=10" +
-  //     "&category=" +
-  //     Catagory +
-  //     "&difficulty=" +
-  //     Difficulty +
-  //     "&type=multiple",
-  //   true
-  // );
-  // xhr.onload = function () {
-  //   if (this.status == 200) {
-  //     Response(JSON.parse(this.responseText));
-  //   }
-  // };
-  // xhr.send();
-  // function Response(result) {
-  //   setQuestion(result,i);
-  // }
 
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
-
-  var reqstring =
-    "https://opentdb.com/api.php?amount=10" +
-    "&category=" +
-    Catagory +
-    "&difficulty=" +
-    Difficulty +
-    "&type=multiple";
-
-  // console.log(reqstring);
-
-  useEffect(() => {
-    getQuestions();
-    function getQuestions() {
-      fetch(reqstring)
-      
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            setIsLoaded(true);
-            setItems(result);
-          },
-          (error) => {
-            setIsLoaded(true);
-            setError(error);
-          }
-        );
-      console.log(res);
+  if (load === 0) {
+    setIsLoaded(true);
+    var xhr = new XMLHttpRequest();
+    // eslint-disable-next-line
+    xhr.open('GET','https://opentdb.com/api.php?amount=10' +'&category=' + Catagory +'&difficulty=' + Difficulty +'&type=multiple',true);
+    xhr.onload = function(){
+      if(this.status === 200){
+        Response(JSON.parse(this.responseText));
+      }
     }
-  }, [reqstring]);
+    xhr.send();
+    setload(1);
+  }
+  
+  function Response(result){
+    setQuetion(result,i);
+  }
+  
+  function setQuetion(result, i) {
+    
+    if (i < 10) {
+      setcorrect(Math.floor(Math.random() * 4));
+      setquestion(result.results[i].question);
+      console.log(result.results[i]);
+      
+      setitr(0);
+      for(var j=0;j<4;j++){
+        if(j === correct){
+          setoption[j](result.results[i].correct_answer);
+          // console.log(j);
+        }else{
+          setoption[j](result.results[i].incorrect_answers[itr]);
+          console.log(itr);
+          setitr(itr++);
+        }
+      }
+      setIsLoaded(false);
+    }
+  }
+  var main;
 
-  //onClick={() => check(1)}
-  return (
-    <>
-      <Nav />
-      <main>
+    if (isLoaded == true) {
+      main =
+        <main>
+          <h1>
+            loading .....
+          </h1>
+        </main>
+    } else {
+       main = <main>
         <h1 id="head">
-          {i}
+          {i + 1}
+          .&nbsp; 
           {question}
         </h1>
         <div className="options">
           <div className="option" id="A">
-            1 {option1}
+            1 .&nbsp; {option1}
           </div>
           <div className="option" id="B">
-            2 {option2}
+            2 .&nbsp; {option2}
           </div>
           <div className="option" id="C">
-            3 {option3}
+            3 .&nbsp; {option3}
           </div>
           <div className="option" id="D">
-            4 {option4}
+            4 .&nbsp; {option4}
           </div>
         </div>
         <div className="next">
           <button id="next-btn">Next</button>
         </div>
       </main>
+    }
+  
+    
+  // seti(i++);
+  return (
+    <>
+      <Nav />
+      {main}
     </>
   );
 };

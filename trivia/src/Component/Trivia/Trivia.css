@@ -1,6 +1,10 @@
+*{
+	transition-duration: 0.2s;
+}
 main{
-	margin: 10%;
+	margin:8% 10% 0 10%;
 	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.1);
 }
 #score{
 	position: absolute;
@@ -9,9 +13,11 @@ main{
 	color: aliceblue;
 }
 #head{
-	color: white;
+	color: rgb(0, 0, 0);
 	padding: 10px;
 	width: 90%;
+	padding: 20px 0 0 40px;
+	word-wrap: break-word;
 }
 .options{
 	display: flex;
@@ -21,31 +27,36 @@ main{
 }
 .option{
 	padding: 20px;
-	align-items: center;
 	margin: 2%;
-	width: 450px;
-	height: 10vh;
-	border: 1px solid white;
+	width: 400px;
+	word-break: break-all;
+	height: fit-content;
+	border: 0;
 	color: white;
 	font-size: 20px;
-	font-weight: 900;
-	border-radius:5px;
-	background-color: orange;
+	font-weight: 700;
+	border-radius:10px;
+	background-color: rgb(255, 159, 42);
 }
 .option:hover{
 	cursor: pointer;
-	background-color: rgb(149, 32, 0);
+	background-color: rgb(255, 173, 20);
 }
 .next{
 	display: flex;
 	justify-content: flex-end;
+	padding: 0 40px 20px 0;
 }
 #next-btn{
-	width: 80px;
-	height: 40px;
-	background-color: green;
-	font-size: 20px;
+	width: fit-content;
+	height: fit-content;
+	background-color: rgb(0, 225, 0);
+	font-size: 25px;
+	padding: 10px 20px;
+	border: 0;
+	border-radius: 10px;
 }
 #next-btn:hover{
 	cursor: pointer;
+	background-color: rgb(0, 255, 0);
 }

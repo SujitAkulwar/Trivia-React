@@ -14,14 +14,12 @@ const Form = () => {
   const [difficult, setdifficult] = useState("");
 
   var showform;
-  var redirecttotrivia;
   let navigate = useNavigate(); 
   var handle = () => {
     dispatch(useraction.setsubject(subject));
     dispatch(useraction.setdifficulty(difficult));
     let path = `./Trivia`; 
     if(subject!=="" && difficult!==""){navigate(path);}
-
   };
 
   if (name == null) {
@@ -53,7 +51,7 @@ const Form = () => {
           <option value="hard">hard</option>
         </select>
         <button onClick={() => handle()}>
-          Start Trivia {redirecttotrivia}
+          Start Trivia
         </button>
       </div>
     );
