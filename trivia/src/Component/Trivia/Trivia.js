@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import "./Trivia.css";
 import { useState } from "react";
 import Nav from "../Nav/Nav";
+import { useNavigate } from "react-router-dom";
 
 const Trivia = () => {
+  let navigate = useNavigate(); 
   const Catagory = useSelector((state) => state.user.subject);
   const Difficulty = useSelector((state) => state.user.difficultylevel);
 
@@ -16,14 +18,14 @@ const Trivia = () => {
   const setoption = [setoption1, setoption2, setoption3, setoption4];
   const option = [option1, option2, option3, option4];
   const [question, setquestion] = useState("");
-  var [i, seti] = useState(0);
   // const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   // const [items, setItems] = useState([]);
   // const [result, setresult] = useState([]);
-  var [correct, setcorrect] = useState();
+  var [correct, setcorrect] = useState(0);
   var [itr, setitr] = useState(0);
-
+  const [score, setscore] = useState(0);
+  var i = 0;
 
   if (load === 0) {
     setIsLoaded(true);
@@ -39,13 +41,14 @@ const Trivia = () => {
     setload(1);
   }
   
-  function Response(result){
-    setQuetion(result,i);
+  function Response(result) {
+    console.log(result);
+    setQuetion(result);
   }
   
-  function setQuetion(result, i) {
+  function setQuetion(result) {
     
-    if (i < 10) {
+    for (i = 0; i < 10; i++) {
       setcorrect(Math.floor(Math.random() * 4));
       setquestion(result.results[i].question);
       console.log(result.results[i]);
@@ -62,11 +65,29 @@ const Trivia = () => {
         }
       }
       setIsLoaded(false);
-    }
+      // check();
+      setscore(0);
+      console.log(score);
+    } 
+      
+        // dispatch(useraction.setsubject(subject));
+        // dispatch(useraction.setdifficulty(difficult));
+    let path = `./result`; 
+    navigate(path);
   }
-  var main;
 
-    if (isLoaded == true) {
+
+
+
+
+
+
+
+
+
+
+  var main;
+    if (isLoaded === true) {
       main =
         <main>
           <h1>
@@ -101,7 +122,6 @@ const Trivia = () => {
     }
   
     
-  // seti(i++);
   return (
     <>
       <Nav />
