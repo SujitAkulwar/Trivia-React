@@ -28,7 +28,7 @@ const Nav = () => {
   navbar = (
     <div className="navbar">
       {login}
-      <div className="navitem">{score}</div>
+      <div className="navitem"> max : {score}</div>
       <div className="navitem">
         <Link to="/history">History</Link>
       </div>
