@@ -24,6 +24,7 @@ const Trivia = () => {
   var [itr, setitr] = useState(0);
   const [score, setscore] = useState(0);
   const [userchoose, setuserchoose] = useState(-1);
+  const [clicks, setclicks] = useState(0);
   var i = 0;
 
   if (load === 0) {
@@ -77,7 +78,12 @@ const Trivia = () => {
     navigate(path);
   }
 
+  const click = (e) => {
+    setclicks(1);
+  } 
+
   const check = () => {
+    Event.preventDefault();
     if (correct === userchoose) {
       setscore(score + 10);
     }
@@ -88,8 +94,6 @@ const Trivia = () => {
     check();
   }
 
-
-
   var main;
   if (isLoaded === true) {
     main = (
@@ -99,30 +103,33 @@ const Trivia = () => {
     );
   } else {
     main = (
-      <main>
-        <h1 id="head">
-          {i + 1}
-          .&nbsp;
-          {question}
-        </h1>
-        <div className="options">
-          <div className="option" id="A" onClick={() => setuserchoose(0)}>
-            1 .&nbsp; {option1}
+      <>
+        <h3>{score}</h3>
+        <main>
+          <h1 id="head">
+            {i + 1}
+            .&nbsp;
+            {question}
+          </h1>
+          <div className="options">
+            <div className="option" id="A" onClick={() => click(0)}>
+              1 .&nbsp; {option1}
+            </div>
+            <div className="option" id="B" onClick={() => click(1)}>
+              2 .&nbsp; {option2}
+            </div>
+            <div className="option" id="C" onClick={() => click(2)}>
+              3 .&nbsp; {option3}
+            </div>
+            <div className="option" id="D" onClick={() => click(3)}>
+              4 .&nbsp; {option4}
+            </div>
           </div>
-          <div className="option" id="B" onClick={() => setuserchoose(1)}>
-            2 .&nbsp; {option2}
+          <div className="next">
+            <button id="next-btn">Next</button>
           </div>
-          <div className="option" id="C" onClick={() => setuserchoose(2)}>
-            3 .&nbsp; {option3}
-          </div>
-          <div className="option" id="D" onClick={() => setuserchoose(3)}>
-            4 .&nbsp; {option4}
-          </div>
-        </div>
-        <div className="next">
-          <button id="next-btn">Next</button>
-        </div>
-      </main>
+        </main>
+      </>
     );
   }
 
