@@ -1,12 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Trivia.css";
 import { useState } from "react";
 import Nav from "../Nav/Nav";
 import { useNavigate } from "react-router-dom";
 import loading from "../../loading.mp4"
+import { useraction } from '../../store/store';
 
 const Trivia = () => {
+  const dispatch = useDispatch();
+
+
   let navigate = useNavigate();
   const Catagory = useSelector((state) => state.user.subject);
   const Difficulty = useSelector((state) => state.user.difficultylevel);
@@ -17,8 +21,7 @@ const Trivia = () => {
   const [option3, setoption3] = useState("");
   const [option4, setoption4] = useState("");
   const setoption = [setoption1, setoption2, setoption3, setoption4];
-  // eslint-disable-next-line
-  const [question, setquestion] = useState("");
+  const [question, setquestion] = useState("default");
   const [isLoaded, setIsLoaded] = useState(false);
   var [correct, setcorrect] = useState(0);
   var [itr, setitr] = useState(0);
@@ -32,7 +35,6 @@ const Trivia = () => {
   const [opt3, setopt3] = useState(color[0]);
   const [apiresult, setapiresult] = useState();
   const [i, seti] = useState(0);
-  
 
   if (load === 0) {
     seti(i + 1);
@@ -41,7 +43,7 @@ const Trivia = () => {
     // eslint-disable-next-line
     xhr.open(
       "GET",
-      "https://opentdb.com/api.php?amount=10" +
+      "https://opentdb.com/api.php?amount=12" +
         "&category=" +
         Catagory +
         "&difficulty=" +
@@ -64,27 +66,31 @@ const Trivia = () => {
   }
 
   function setQuetion(result) {
-    let random = Math.floor(Math.random() * 4);
-    setcorrect(random);
-    setquestion(result.results[i].question);
-    setitr(0);
-    console.log(i);
-    for (var j = 0; j < 4; j++) {
-      if (j === correct) {
-        setoption[j](result.results[i].correct_answer);
-      } else {
-        setoption[j](result.results[i].incorrect_answers[itr]);
-        setitr(itr++);
+    if (i > 10) {
+      dispatch(useraction.setcurrentscore(score));
+      let path = `/Result`;
+      navigate(path);
+    } else {
+      let random = Math.floor(Math.random() * 4);
+      setcorrect(random);
+      setquestion(result.results[i].question);
+      if (question !== undefined) {
+        setitr(0);
+        console.log(i);
+        for (var j = 0; j < 4; j++) {
+          if (j === correct) {
+            setoption[j](result.results[i].correct_answer);
+          } else {
+            setoption[j](result.results[i].incorrect_answers[itr]);
+            setitr(itr++);
+          }
+        }
       }
     }
     setitr(0);
     setIsLoaded(false);
   }
 
-  if (i > 9) {
-    let path = `./result`;
-    navigate(path);
-  }
 
   const click = (e) => {
     setclicks(clicks + 1);
@@ -136,7 +142,7 @@ const Trivia = () => {
     setclicks(0);
     setQuetion(apiresult);
   }
-
+  
   var main;
   if (isLoaded === true) {
     main = (

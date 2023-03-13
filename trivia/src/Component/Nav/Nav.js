@@ -10,6 +10,13 @@ const Nav = () => {
   var navbar;
   var name;
   var login;
+  var home;
+
+  home = (
+    <div className="navitem">
+        <Link to="/home">home</Link>
+      </div>
+  )
 
   if (username == null) {
     name = "User";
@@ -27,8 +34,9 @@ const Nav = () => {
 
   navbar = (
     <div className="navbar">
+      {home}
       {login}
-      <div className="navitem"> max : {score}</div>
+      <div className="navitem"> highest : {score}</div>
       <div className="navitem">
         <Link to="/history">History</Link>
       </div>

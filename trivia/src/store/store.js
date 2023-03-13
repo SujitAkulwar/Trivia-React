@@ -2,10 +2,13 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const userslice = createSlice({
   name: "user",
-  initialState: { username: "sujit", historyList: [], maxScore: 0 ,difficultylevel:"",subject:""},
+  initialState: { username: "sujit", historyList: [], maxScore: 0 ,difficultylevel:"",subject:"",currentscore:0},
   reducers: {
     setscore: (state, action) => {
       state.maxScore = action.payload;
+    },
+    setcurrentscore: (state, action) => {
+      state.currentscore = action.payload;
     },
     addhistory: (state, action) => {
       state.historyList = [...state.historyList, action.payload];
