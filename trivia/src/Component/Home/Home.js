@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <Nav />
-      <h1>Trivia</h1>
+      <h1 className="ht">Trivia</h1>
       <Form />
     </div>
   );

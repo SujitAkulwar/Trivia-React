@@ -1,0 +1,46 @@
+.form{
+    height: 60vh;
+    margin: auto;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 0;
+    border: 5px dotted white;
+    font-size: 30px;
+    border-radius: 5px;
+}
+.select1{
+    height: 50px;
+    width: 250px;
+    font-size: 20px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px white;
+}
+.fb{
+    background-color: rgba(255, 255, 255, 0.4);
+    font-size: 20px;
+    padding: 10px 20px;
+    color: white;
+    border:  4px dotted white;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px white ;
+    transition-duration: 0.3s;
+}
+.fb:hover{
+    transform: translateY(-3px);
+}
+.fs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+}

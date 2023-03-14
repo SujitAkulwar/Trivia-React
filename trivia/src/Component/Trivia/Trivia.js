@@ -4,12 +4,11 @@ import "./Trivia.css";
 import { useState } from "react";
 import Nav from "../Nav/Nav";
 import { useNavigate } from "react-router-dom";
-import loading from "../../loading.mp4"
-import { useraction } from '../../store/store';
+import loading from "../../loading.mp4";
+import { useraction } from "../../store/store";
 
 const Trivia = () => {
   const dispatch = useDispatch();
-
 
   let navigate = useNavigate();
   const Catagory = useSelector((state) => state.user.subject);
@@ -66,7 +65,7 @@ const Trivia = () => {
   }
 
   function setQuetion(result) {
-    if (i > 10) {
+    if (i > 9) {
       dispatch(useraction.setcurrentscore(score));
       let path = `/Result`;
       navigate(path);
@@ -91,12 +90,10 @@ const Trivia = () => {
     setIsLoaded(false);
   }
 
-
   const click = (e) => {
     setclicks(clicks + 1);
     setuserchoose(e);
   };
-
 
   const changecolor = (e) => {
     switch (userchoose) {
@@ -115,7 +112,7 @@ const Trivia = () => {
       default:
         break;
     }
-  }
+  };
 
   const check = () => {
     if (clicks === 1) {
@@ -141,22 +138,22 @@ const Trivia = () => {
     setopt3(color[0]);
     setclicks(0);
     setQuetion(apiresult);
-  }
-  
+  };
+
   var main;
   if (isLoaded === true) {
     main = (
       <main>
-        <video width="500" height="500"  autoPlay loop muted >
-          <source src={loading} type="video/mp4"/>
+        <video width="500" height="500" autoPlay loop muted>
+          <source src={loading} type="video/mp4" />
         </video>
       </main>
     );
   } else {
     main = (
       <>
-        <h3>{score}</h3>
-        <main>
+        <h3 className="score">Score : {score}</h3>
+        <main className="main">
           <h1 id="head">
             {i}
             .&nbsp;
@@ -196,7 +193,7 @@ const Trivia = () => {
               4 .&nbsp; {option4}
             </div>
           </div>
-          <div className="next" onClick={()=>next()}>
+          <div className="next" onClick={() => next()}>
             <button id="next-btn">Next</button>
           </div>
         </main>
@@ -205,10 +202,10 @@ const Trivia = () => {
   }
 
   return (
-    <>
+    <div className="tbody">
       <Nav />
       {main}
-    </>
+    </div>
   );
 };
 
