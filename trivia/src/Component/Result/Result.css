@@ -1,0 +1,24 @@
+.re{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
+}
+.r{
+    text-align: center;
+    padding: 20px;
+}
+.r1{
+    font-size: 50px;
+    letter-spacing: 2px;
+    /* background-image:linear-gradient(to right,rgb(255, 0, 0),pink) ; */
+    background-clip: text;
+    color: transparent;
+}   
+.r2{
+    font-size: 40px;
+    font-weight: 600;
+    color: aquamarine;
+    text-shadow: 2px 2px black;
+}

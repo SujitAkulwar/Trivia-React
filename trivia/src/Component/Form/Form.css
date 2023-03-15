@@ -27,14 +27,15 @@
     font-size: 20px;
     padding: 10px 20px;
     color: white;
-    border:  4px dotted white;
-    border-radius: 20px;
+    border:  2px dashed white;
+    border-radius: 10px;
     cursor: pointer;
     box-shadow: 1px 1px 2px white ;
     transition-duration: 0.3s;
 }
 .fb:hover{
     transform: translateY(-3px);
+    background-color: rgba(0, 255, 255, 0.7);
 }
 .fs{
     display: flex;
